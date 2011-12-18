@@ -1,0 +1,17 @@
+-# -*- coding: utf-8 -*-
+
+.topbar
+  .topbar-inner
+    .container
+      %ul.nav
+        %li
+          %a(href="/" style="font-size:24px;")
+            &laquo;
+      %h1
+        = @title
+
+.container
+  #list
+
+:javascript
+  var pageTitle = "#{@title}";

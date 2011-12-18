@@ -1,0 +1,83 @@
+/*
+*= require bootstrap.css
+*/
+
+body {
+  padding-top: 40px;
+}
+
+
+h1 {
+  font-size: 24px;
+  margin: 0px;
+  color: #EEE;
+}
+
+pre {
+  margin: 5px 0px;
+}
+
+#list {
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
+#list .item {
+}
+
+#list .item .text-container {
+}
+
+#list .item .text {
+  color: #111;
+}
+
+#list .item div.text {
+  padding: 5px;
+}
+
+#list .item textarea.text {
+  width: 100%;
+  height: 28px;
+  overflow: hidden;
+  resize: none;
+}
+
+#list .item img {
+  vertical-align: top;
+}
+
+#list .item iframe {
+  vertical-align: top;
+}
+
+#list .item .indent0 {
+  /*border-bottom: 1px solid #EEE;*/
+}
+
+#list .item .indent0 .text {
+  font-size: 17px;
+  color: #222;
+}
+
+#list .item .indent1 .text {
+  font-size: 14px;
+  color: #333;
+}
+
+#list .item .indent2 .text {
+  font-size: 13px;
+  color: #444;
+}
+
+#list .item .indent3 .text {
+  font-size: 12px;
+}
+
+#list .item .indent4 .text {
+  font-size: 12px;
+}
+
+#list .item .indent5 .text {
+  font-size: 12px;
+}
