@@ -5,10 +5,13 @@ class Listwiki < Padrino::Application
 
   enable :sessions
 
-  # Sprockets support
+  ## Sprockets support
   require 'sprockets'
   register Padrino::Sprockets
   sprockets
+
+  ## HTML5
+  set :haml, :format => :html5
 
   ##
   # Caching support
