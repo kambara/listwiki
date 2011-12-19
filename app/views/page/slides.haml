@@ -1,0 +1,18 @@
+-# -*- coding: utf-8 -*-
+
+%link(rel="stylesheet"
+      href="/assets/deck.core.css")
+
+%link(rel="stylesheet"
+      href="/assets/deck-themes/style/swiss.css")
+
+.deck-container
+  #slide-view
+
+%script(type="text/javascript"
+        src="/assets/slides_app.js")
+
+:javascript
+  $(function() {
+    application.main("#{@title}");
+  });

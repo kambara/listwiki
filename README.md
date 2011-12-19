@@ -18,3 +18,6 @@ Bundler
 # Usage
 
     $ padrino start
+
+    $ padrino start -d -p 3000 -e development -a thin
+    $ padrino stop

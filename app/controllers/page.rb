@@ -1,6 +1,57 @@
 # -*- coding: utf-8 -*-
 
 Listwiki.controllers :page do
+  get :index, :map => '/' do
+    redirect '/page/index'
+  end
+
+  get :index, :with => :title do
+    ## /page/:title
+    @title = params[:title]
+    render 'page/list.haml'
+  end
+
+  get :slides, :with => :title do
+    ## /page/slides/:title
+    @title = params[:title]
+    render 'page/slides.haml'
+  end
+
+  get :api, :with => :title do
+    content_type 'application/json'
+    begin
+      page_read(params[:title])
+    rescue => ex
+      { :status => 'error',
+        :message => ex.message
+      }.to_json
+    end
+  end
+
+  post :api, :with => :title do
+    content_type 'application/json'
+    begin
+      page_write(params[:title], request.env["rack.input"].read)
+      {}.to_json
+    rescue => ex
+      { :status => 'error',
+        :message => ex.message
+      }.to_json
+    end
+  end
+
+  delete :api, :with => :title do
+    content_type 'text/json'
+    begin
+      page_delete(params[:title])
+      {}.to_json
+    rescue => ex
+      { :status => 'error',
+        :message => ex.message
+      }.to_json
+    end
+  end
+
   # get :index, :map => "/foo/bar" do
   #   session[:foo] = "bar"
   #   render 'index'
@@ -19,34 +70,4 @@ Listwiki.controllers :page do
   # get "/example" do
   #   "Hello world!"
   # end
-
-  get :index, :map => '/' do
-    redirect '/page/index'
-  end
-
-  get :index, :with => :title do
-    @title = params[:title]
-    render 'page/page.haml'
-  end
-
-  get :api, :with => :title do
-    content_type 'application/json'
-    page_read(params[:title])
-  end
-
-  post :api, :with => :title do
-    content_type 'application/json'
-    page_write(params[:title], request.env["rack.input"].read)
-    {}.to_json
-  end
-
-  put :api, :with => :title do
-    content_type 'application/json'
-    page_write(params[:title], params[:data])
-  end
-
-  delete :api, :with => :title do
-    content_type 'text/json'
-    page_delete(params[:title])
-  end
 end

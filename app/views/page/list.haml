@@ -1,0 +1,37 @@
+-# -*- coding: utf-8 -*-
+
+%link(rel="stylesheet"
+      href="/assets/application.css")
+
+.topbar
+  .topbar-inner
+    .container
+      %a.back(href="/" style="visibility:#{if @title == 'index' then 'hidden' else 'visible' end};")
+        &laquo;
+      %h1
+        = @title
+      %div#save-indicator
+        Saved
+      %ul.nav.secondary-nav
+        %li.dropdown
+          %a.dropdown-toggle(href="#")
+            %span(style="visibility:hidden;")
+              M
+          %ul.dropdown-menu
+            %li
+              %a(href="/page/slides/#{@title}")
+                Slides
+
+.container
+  #list
+
+%script(type="text/javascript"
+        src="/assets/list_app.js")
+%script(type="text/javascript"
+        src="/assets/libs/bootstrap-dropdown.js")
+
+:javascript
+  $(function() {
+    application.main("#{@title}");
+  });
+  $('.topbar').dropdown()

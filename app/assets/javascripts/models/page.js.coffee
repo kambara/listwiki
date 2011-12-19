@@ -19,22 +19,28 @@ class Row extends Backbone.Model
     })
 
   finishEdit: (text)->
+    prevText = @get('text')
     @set({
       text: text
       editing: false
     })
+    if text isnt prevText
+      @trigger('modify')
 
   split: (first, last) ->
     @finishEdit(first)
     @get('page').insertBelow(this, last)
+    @trigger('modify')
 
   mergeWithBelow: (text) ->
     @finishEdit(text)
     @get('page').mergeWithBelow(this)
+    @trigger('modify')
 
   mergeIntoAbove: (text) ->
     @finishEdit(text)
     @get('page').mergeIntoAbove(this)
+    @trigger('modify')
 
   focusAbove: (text) ->
     @finishEdit(text)
@@ -54,6 +60,7 @@ class Row extends Backbone.Model
       indent: i
       text: text
     })
+    @trigger('modify')
 
   unindent: (text) ->
     i = @get('indent') - 1
@@ -62,20 +69,69 @@ class Row extends Backbone.Model
       indent: i
       text: text
     })
+    @trigger('modify')
 
   getHtml: ->
     (new application.WikiSyntax()).convert(@get('text'))
 
+  getSlideHtml: ->
+
   getElementId: ->
     "item-#{@cid}"
+
+class Slide extends Backbone.Model
+  defaults:
+    title: null
+    list: []
+
+  getHtml: ->
+    if @get('title')? == 0
+      return ''
+    title = (new application.WikiSyntax()).convert @get('title')
+    if @get('list').length == 0
+      return "<h1>#{title}</h1>"
+    listHtml =  @getListHtml @get('list')
+    "<h2>#{title}</h2>#{listHtml}"
+
+  getListHtml: (list) ->
+    htmlAry = []
+    for item in list
+      if typeof item is 'string'
+        html = (new application.WikiSyntax()).convert(item)
+        htmlAry.push "<li>#{html}</li>"
+      else if typeof item is 'object'
+        htmlAry.push @getListHtml(item)
+    [
+      '<ul>'
+      htmlAry.join('')
+      '</ul>'
+    ].join('')
 
 class application.Page extends Backbone.Model
   defaults:
     title: ''
+    created_at: null
+    updated_at: null
     body: []
 
   initialize: ->
     @fetch()
+
+  getSlides: ->
+    slides = []
+    lastSlide = null
+    for item in @get('body')
+      if typeof item is 'string'
+        slide = new Slide({
+          title: item
+        })
+        slides.push(slide)
+        lastSlide = slide
+      else if typeof item is 'object' and lastSlide?
+        lastSlide.set({
+          list: item
+        })
+    slides
 
   getRows: ->
     unless @rows?
@@ -92,15 +148,32 @@ class application.Page extends Backbone.Model
             text: node
             page: this
           })
-          row.bind('change', @onRowChange)
+          row.bind('modify', @onRowModify)
           rows.push(row)
         when 'object'
           rows.push(r) for r in @_getRows(node, indent+1)
     rows
 
-  onRowChange: () =>
+  validate: (attrs) ->
+    if attrs.title? and attrs.title.length is 0
+      'No title'
+    else if attrs.body? and attrs.body.length is 0
+      'No body'
+
+  onRowModify: () =>
+    $('#save-indicator').text('Save...').show()
+    unless @get('created_at')
+      @set({
+        created_at: (new Date()).getTime()
+      })
     @save({
       body: @getTree()
+      updated_at: (new Date()).getTime()
+    }, {
+      success: ->
+        $('#save-indicator').text('Saved').fadeOut(3000)
+      error: (msg)->
+        $('#save-indicator').text("Error")
     })
 
   getTree: () =>
@@ -143,6 +216,7 @@ class application.Page extends Backbone.Model
       page: this
       editing: true
     })
+    newRow.bind('modify', @onRowModify)
     @rows.splice(@getIndexOf(row)+1, 0, newRow)
     @trigger('insert', row, newRow)
 

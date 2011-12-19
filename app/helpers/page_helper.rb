@@ -8,7 +8,7 @@ Listwiki.helpers do
     if File.exist?(page_filepath(title))
       File.open(page_filepath(title)).read
     else
-      default_page(title).to_json
+      default_page(title.force_encoding("UTF-8")).to_json
     end
   end
 
@@ -17,7 +17,7 @@ Listwiki.helpers do
       :title      => title,
       :created_at => nil,
       :updated_at => nil,
-      :body       => ["Welcome!"]
+      :body       => ['']
     }
   end
 

@@ -77,10 +77,12 @@ class RowView extends Backbone.View
           @model.finishEdit(@textarea.val())
           false
       when 8 ## Backspace
-        if @textarea.getCaretPos().start == 0
+        caretPos = @textarea.getCaretPos()
+        if caretPos.start is caretPos.end and caretPos.start is 0
           @model.mergeIntoAbove(@textarea.val())
           false
       when 46 ## Del
+        
         if @textarea.getCaretPos().start == @textarea.val().length
           @model.mergeWithBelow(@textarea.val())
           false
@@ -129,7 +131,7 @@ class RowView extends Backbone.View
     else
       false
 
-class application.PageView extends Backbone.View
+class application.ListView extends Backbone.View
   el: '#list'
 
   initialize: ->
@@ -141,6 +143,10 @@ class application.PageView extends Backbone.View
     @model.unbind 'change'
     for row in @model.getRows()
       rowView = new RowView({model: row})
+      ## Focus when there is no text
+      if (@model.getRows().length == 1 and
+          row.get('text') is '')
+        row.set({ editing: true })
       $(@el).append(rowView.el)
     this
 
