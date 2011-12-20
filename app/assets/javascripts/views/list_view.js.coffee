@@ -39,7 +39,7 @@ class RowView extends Backbone.View
   renderTextarea: (minHeight) ->
     text = @model.get('text')
     unless jQuery.support.noCloneEvent ## IE
-      text = text.replace(/\n/g, '\r\n')
+      text = text.replace(/\n/g, "\r\n--")
     @textarea = $('<textarea/>')
       .text(text)
       .addClass('text')
