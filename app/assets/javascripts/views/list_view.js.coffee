@@ -59,6 +59,7 @@ class RowView extends Backbone.View
 
   onKeydown: (event) =>
     #console.log(event.keyCode)
+    @prevCaretPos = null
     switch event.keyCode
       when 13 ## Enter
         if event.shiftKey
