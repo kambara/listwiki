@@ -41,6 +41,7 @@ class RowView extends Backbone.View
       .text(@model.get('text'))
       .addClass('text')
       .keydown(@onKeydown)
+      .keyup(@onKeyup)
       .appendTo(@container)
     setTimeout(() =>
       @textarea.autoResize({
@@ -86,13 +87,30 @@ class RowView extends Backbone.View
           @model.mergeWithBelow(@textarea.val())
           false
       when 38 ## Up
-        if @textarea.getCaretPos().start == 0
+        caretPos = @textarea.getCaretPos()
+        if caretPos.start == 0
           @model.focusAbove(@textarea.val())
           false
+        else
+          @prevCaretPos = caretPos
       when 40 ## Down
+        caretPos = @textarea.getCaretPos()
         if @textarea.getCaretPos().start == @textarea.val().length
           @model.focusBelow(@textarea.val())
           false
+        else
+          @prevCaretPos = caretPos
+
+  onKeyup: (event) =>
+    caretPos = @textarea.getCaretPos()
+    switch event.keyCode
+      when 38 # Up
+        if @prevCaretPos? and caretPos.start is @prevCaretPos.start
+          @textarea.setCaretPos({start:0, end:0})
+      when 40 # Down
+        if @prevCaretPos? and caretPos.start is @prevCaretPos.start
+          last = @textarea.val().length
+          @textarea.setCaretPos({start:last, end:last})
 
   split: () =>
     str = @textarea.val()
