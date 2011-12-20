@@ -15,21 +15,26 @@ class application.WikiSyntax
 
   convert: (text) ->
     text = text.replace(/(\r\n|\r)/g, '\n')
-    lines = []
+    textLines = text.split('\n')
+    htmlLines = []
     preLines = []
-    for line in text.split('\n')
+    for line, i in textLines
       if line.length > 0 and line.charAt(0) is ' '
-        ## pre
-        preLines.push line
+        ## <pre> lines
+        preLines.push @escapeHtml(line.substr(1))
       else
+        ## finish <pre> block
         if preLines.length > 0
-          lines.push @pre(@escapeHtml(preLines.join('\n')))
+          htmlLines.push @pre(preLines.join('\n'))
           preLines = []
         ## convert line
-        lines.push @convertLine(line)
-        lines.push '<br />'
-    lines.push @pre(preLines.join('\n')) if preLines.length > 0
-    lines.join('')
+        htmlLines.push @convertLine(line)
+        ## <br/>
+        if i < textLines.length-1
+          htmlLines.push '<br />'
+    if preLines.length > 0
+      htmlLines.push @pre(preLines.join('\n'))
+    htmlLines.join('')
 
   pre: (str) ->
     "<pre>#{str}</pre>"

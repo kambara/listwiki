@@ -254,7 +254,7 @@ class application.Page extends Backbone.Model
       above = @rows[index-1]
       above.set({
         editing: true
-        caretPos: above.get('text').length
+        caretPos: 0
       })
     else
       row.set({

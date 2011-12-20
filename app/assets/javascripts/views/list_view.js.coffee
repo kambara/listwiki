@@ -9,8 +9,8 @@ class RowView extends Backbone.View
 
   initialize: ->
     $(@el).attr('id', @model.getElementId())
-    $('body').mousedown @onBodyMousedown
-    $('body').mouseup @onBodyMouseup
+    $(window).mousedown @onBodyMousedown
+    $(window).mouseup @onBodyMouseup
     @model.bind 'change', @render
     @container = $('<div/>').addClass('text-container').appendTo(@el)
     @container.mousedown @onMousedown
@@ -45,7 +45,7 @@ class RowView extends Backbone.View
     setTimeout(() =>
       @textarea.autoResize({
         animate: false
-        extraSpace: 10
+        extraSpace: 0
       }).trigger('change')
       if (minHeight? and @textarea.height() < minHeight)
         @textarea.height(minHeight)
@@ -82,7 +82,6 @@ class RowView extends Backbone.View
           @model.mergeIntoAbove(@textarea.val())
           false
       when 46 ## Del
-        
         if @textarea.getCaretPos().start == @textarea.val().length
           @model.mergeWithBelow(@textarea.val())
           false
