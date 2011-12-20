@@ -19,5 +19,9 @@ Bundler
 
     $ padrino start
 
+Specify Daemonizing, Port, Environment and Adapter
+
     $ padrino start -d -p 3000 -e development -a thin
     $ padrino stop
+
+See also [Padrino Terminal Commands](http://www.padrinorb.com/guides/development-commands#terminal-commands)
