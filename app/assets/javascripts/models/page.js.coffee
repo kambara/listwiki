@@ -87,20 +87,14 @@ class Slide extends Backbone.Model
 
   getHtml: ->
     if @get('title')? == 0
-      return ''
-    
-    if @get('list').length == 0
-      if @get('title').match(/^(.+)\n\n(.+)/m)
-        title = (new application.WikiSyntax()).convert RegExp.$1
-        p = (new application.WikiSyntax()).convert RegExp.$2
-        return "<h1>#{title}<p>#{p}</p></h1>"
-      else
-        title = (new application.WikiSyntax()).convert @get('title')
-        return "<h1>#{title}</h1>"
-
-    title = (new application.WikiSyntax()).convert @get('title')
-    listHtml =  @getListHtml @get('list')
-    "<h2>#{title}</h2>#{listHtml}"
+      ''
+    else if @get('list').length == 0
+      title = (new application.WikiSyntax()).convert @get('title')
+      "<h1>#{title}</h1>"
+    else
+      title = (new application.WikiSyntax()).convert @get('title')
+      listHtml =  @getListHtml @get('list')
+      "<h2>#{title}</h2>#{listHtml}"
 
   getListHtml: (list) ->
     htmlAry = []
@@ -128,6 +122,9 @@ class application.Page extends Backbone.Model
 
   getSlides: ->
     slides = []
+    slides.push(new Slide({
+      title: @get('title')
+    }))
     lastSlide = null
     for item in @get('body')
       if typeof item is 'string'

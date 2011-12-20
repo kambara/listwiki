@@ -22,7 +22,6 @@ class application.SlidesView extends Backbone.View
 
   render: ->
     @model.unbind 'change'
-    console.log @model.getSlides()
     for slide in @model.getSlides()
       slideView = new SlideView({model: slide})
       $(@el).append(slideView.el)
