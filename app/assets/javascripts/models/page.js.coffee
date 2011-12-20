@@ -285,4 +285,4 @@ class application.Page extends Backbone.Model
     null
 
   url: ->
-    "/page/api/#{ @get('title') }"
+    "/page/api/#{ @get('title') }?t=#{(new Date()).getTime()}"
