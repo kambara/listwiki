@@ -42,6 +42,10 @@ pre {
   margin: 5px 0px;
 }
 
+hr {
+  margin: 10px 0 10px;
+}
+
 #list {
   margin-top: 20px;
   margin-left: 50px;

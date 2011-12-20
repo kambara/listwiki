@@ -8,6 +8,7 @@ class application.WikiSyntax
     @httpLinkRe = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%\#]+/
     @youtubeRe = /https?:\/\/www\.youtube\.com\/watch\?([\w&=]+)/
     @youtubeShortRe = /http:\/\/youtu\.be\/(\w+)/
+    @horizontalRe = /^----$/
     @ltRe = /</
     @gtRe = />/
     @ampRe = /&/
@@ -27,11 +28,14 @@ class application.WikiSyntax
         if preLines.length > 0
           htmlLines.push @pre(preLines.join('\n'))
           preLines = []
-        ## convert line
-        htmlLines.push @convertLine(line)
-        ## <br/>
-        if i < textLines.length-1
-          htmlLines.push '<br />'
+        if line.match(@horizontalRe)
+          htmlLines.push '<hr />'
+        else
+          ## Line
+          htmlLines.push @convertLine(line)
+          ## <br/>
+          if i < textLines.length-1
+            htmlLines.push '<br />'
     if preLines.length > 0
       htmlLines.push @pre(preLines.join('\n'))
     htmlLines.join('')
