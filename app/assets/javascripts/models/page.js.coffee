@@ -286,4 +286,8 @@ class application.Page extends Backbone.Model
     null
 
   url: ->
-    "/page/api/#{ @get('title') }?nocache=#{(new Date()).getTime()}"
+    t = (new Date()).getTime().toString()
+    "/page/api/#{ @encodedTitle() }?nocache=#{t}"
+
+  encodedTitle: ->
+    encodeURIComponent @get('title')

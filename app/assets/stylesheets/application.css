@@ -6,6 +6,10 @@ body {
   padding-top: 40px;
 }
 
+.container {
+  width: 680px;
+}
+
 .topbar a.back {
   font-size: 20px;
   display: block;
