@@ -47,8 +47,7 @@ hr {
 }
 
 #list {
-  margin-top: 20px;
-  margin-left: 50px;
+  margin: 20px 0px 100px 50px;
 }
 
 #list .item {
