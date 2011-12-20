@@ -32,7 +32,7 @@ See also [Padrino Terminal Commands](http://www.padrinorb.com/guides/development
 
 ## Wiki Syntax
 
-Formatting rule is similar to [PukiWiki style](http://pukiwiki.sourceforge.jp/?FormatRule).
+Formatting rules are similar to [PukiWiki style](http://pukiwiki.sourceforge.jp/?FormatRule).
 
 ### Link
 
@@ -56,7 +56,7 @@ URL for a YouTube video page
     http://www.youtube.com/watch?v=sV75QjBrso0
     http://youtu.be/sV75QjBrso0
 
-### Pre-formatted text (pre)
+### Pre-formatted text
 
 Indent every line of a block by one space character
 
