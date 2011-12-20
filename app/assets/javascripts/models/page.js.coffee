@@ -74,10 +74,11 @@ class Row extends Backbone.Model
   getHtml: ->
     (new application.WikiSyntax()).convert(@get('text'))
 
-  getSlideHtml: ->
-
   getElementId: ->
     "item-#{@cid}"
+
+  getIndexOfLastLine: ->
+    @get('text').lastIndexOf('\n') + 1
 
 class Slide extends Backbone.Model
   defaults:
@@ -254,7 +255,7 @@ class application.Page extends Backbone.Model
       above = @rows[index-1]
       above.set({
         editing: true
-        caretPos: 0
+        caretPos: above.getIndexOfLastLine()
       })
     else
       row.set({
@@ -285,4 +286,4 @@ class application.Page extends Backbone.Model
     null
 
   url: ->
-    "/page/api/#{ @get('title') }?t=#{(new Date()).getTime()}"
+    "/page/api/#{ @get('title') }?nocache=#{(new Date()).getTime()}"
