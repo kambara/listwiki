@@ -37,8 +37,11 @@ class RowView extends Backbone.View
       .appendTo(@container)
 
   renderTextarea: (minHeight) ->
+    text = @model.get('text')
+    unless jQuery.support.noCloneEvent ## IE
+      text = text.replace(/\n/g, '\r\n')
     @textarea = $('<textarea/>')
-      .text(@model.get('text'))
+      .text(text)
       .addClass('text')
       .keydown(@onKeydown)
       .keyup(@onKeyup)
@@ -103,15 +106,20 @@ class RowView extends Backbone.View
           @prevCaretPos = caretPos
 
   onKeyup: (event) =>
-    caretPos = @textarea.getCaretPos()
     switch event.keyCode
       when 38 # Up
+        caretPos = @textarea.getCaretPos()
         if @prevCaretPos? and caretPos.start is @prevCaretPos.start
+          ## Move caret to head
           @textarea.setCaretPos({start:0, end:0})
+          false
       when 40 # Down
+        caretPos = @textarea.getCaretPos()
         if @prevCaretPos? and caretPos.start is @prevCaretPos.start
+          ## Move caret to end
           last = @textarea.val().length
           @textarea.setCaretPos({start:last, end:last})
+          false
 
   split: () =>
     str = @textarea.val()
