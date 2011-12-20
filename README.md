@@ -1,9 +1,9 @@
 # Install
 
-    $ git clone git://github.com/~~~~
+    $ git clone git@github.com:kambara/listwiki.git
     $ cd listwiki
 
-RVM
+RVM (ruby 1.9.2)
 
     $ rvm install 1.9.2
     $ rvm 1.9.2
@@ -17,6 +17,8 @@ Bundler
 
 # Usage
 
+## Start the server
+
     $ padrino start
 
 Specify Daemonizing, Port, Environment and Adapter
@@ -25,3 +27,39 @@ Specify Daemonizing, Port, Environment and Adapter
     $ padrino stop
 
 See also [Padrino Terminal Commands](http://www.padrinorb.com/guides/development-commands#terminal-commands)
+
+## Wiki Syntax
+
+Formatting rule is similar to [PukiWiki style](http://pukiwiki.sourceforge.jp/?FormatRule).
+
+### Link
+
+    [[Page Name]]
+
+### External link
+
+    http://example.com/
+    [[Example: http://example.com/]]
+
+### Image
+
+URL for png, jpeg or gif
+
+    http://example.com/hoge.png
+
+### YouTube video
+
+URL for a YouTube video page
+
+    http://www.youtube.com/watch?v=sV75QjBrso0
+    http://youtu.be/sV75QjBrso0
+
+### Pre-formatted text (pre)
+
+Indent every line of a block by one space character
+
+    ~~~
+     function example() {
+       alert('example');
+     }
+    ~~~
