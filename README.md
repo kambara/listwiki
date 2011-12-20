@@ -1,4 +1,6 @@
-# Install
+# ListWiki
+
+## Install
 
     $ git clone git@github.com:kambara/listwiki.git
     $ cd listwiki
@@ -15,7 +17,6 @@ Bundler
     $ gem install bundler
     $ bundle install
 
-# Usage
 
 ## Start the server
 
@@ -27,6 +28,7 @@ Specify Daemonizing, Port, Environment and Adapter
     $ padrino stop
 
 See also [Padrino Terminal Commands](http://www.padrinorb.com/guides/development-commands#terminal-commands)
+
 
 ## Wiki Syntax
 
@@ -59,7 +61,7 @@ URL for a YouTube video page
 Indent every line of a block by one space character
 
     ~~~
-     function example() {
-       alert('example');
+     function hello() {
+       alert('hello');
      }
     ~~~
