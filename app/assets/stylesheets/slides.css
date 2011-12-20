@@ -1,0 +1,15 @@
+/*
+*= require ./deck.core.css
+*= require ./deck-themes/style/swiss.css
+*= require ./deck-themes/transition/horizontal-slide.css
+*/
+
+.slide h1 p {
+  margin-top: 1em;
+  font-size: 0.4em;
+  font-weight: normal;
+}
+
+.slide ul li {
+  font-size: 160%;
+}
