@@ -2,8 +2,8 @@ window.application ||= {}
 
 class application.WikiSyntax
   constructor: () ->
-    @textLinkRe = /\[\[([^\n\]]+) *: *(https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%\#]+)\]\]/
-    @wikiLinkRe = /\[\[([^\n\]]+)\]\]/
+    @textLinkRe = /\[([^\n\]]+) *: *(https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%\#]+)\]/
+    @wikiLinkRe = /\[([^\n\]]+)\]/
     @imageRe = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%\#]+\.(jpg|jpeg|png|gif)/i
     @httpLinkRe = /https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%\#]+/
     @youtubeRe = /https?:\/\/www\.youtube\.com\/watch\?([\w&=]+)/
