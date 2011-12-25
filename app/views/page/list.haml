@@ -6,13 +6,13 @@
 .topbar
   .topbar-inner
     .container
-      %a.back(href="/" style="visibility:#{if @title == 'Index' then 'hidden' else 'visible' end};")
-        &laquo;
-      %h1
-        = @title
-      %div#save-indicator
-        Saved
+      %ul.nav
+        %a(href="/")
+          Home
       %ul.nav.secondary-nav
+        %li
+          %div#save-indicator
+            Saved
         %li.dropdown
           %a.dropdown-toggle(href="#")
             %span(style="visibility:hidden;")
@@ -24,6 +24,8 @@
                 Slides
 
 .container
+  %h1
+    = @title
   #list
 
 %script(type="text/javascript"

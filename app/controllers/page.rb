@@ -2,7 +2,7 @@
 
 Listwiki.controllers :page do
   get :index, :map => '/' do
-    redirect '/page/Index'
+    redirect '/page/Home'
   end
 
   get :index, :with => :title do
